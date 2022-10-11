@@ -29,7 +29,7 @@ def initialize_app(app):
     api.add_namespace(pipelinesNS)
     api.add_namespace(dataNS)
     api.add_namespace(trainingNS)
-    #api.add_namespace(docsNS)
+    api.add_namespace(docsNS)
 
 
 if __name__ == '__main__':
