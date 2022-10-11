@@ -1,0 +1,6 @@
+{
+    "pipeline": "simplePipelineV2",
+    "modelName": "teste",
+    "executionTime": 106.28,
+    "startTime": "2022/10/11 16:39:00"
+}

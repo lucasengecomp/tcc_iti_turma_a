@@ -1,0 +1,8 @@
+{
+    "name": "teste",
+    "frequencyColumn": "frequency",
+    "recencyColumn": "recency",
+    "tColumn": "T",
+    "idColumn": "id",
+    "pipeline": "simplePipelineV2"
+}
