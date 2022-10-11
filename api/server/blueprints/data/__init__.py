@@ -98,8 +98,7 @@ class datum(Resource):
         if not appauth.validateToken(**parser.parse_args()):
             ns.abort(401, "Token Invalido")
         
-        tableFolder = os.path.join(os.path.dirname(__file__), "..", "..", "data", "{}".format(tableName))
-        dataFile = os.path.join(tableFolder, "data.csv")
+        dataFile = os.path.join(os.path.dirname(__file__), "..", "..", "data", "{}.csv".format(tableName))
 
         with open(dataFile, "r") as f:
             dictReader = csv.DictReader(f)
