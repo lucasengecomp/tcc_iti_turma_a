@@ -29,7 +29,7 @@
 <pre><code class="python">import os
 import glob
 
-from flask import request, render_template, render_template_string, make_response
+from flask import request, redirect, make_response
 from flask_restx import Namespace, Resource, reqparse
 
 ns = Namespace(&#39;docs&#39;,
@@ -37,14 +37,50 @@ ns = Namespace(&#39;docs&#39;,
 
 
 @ns.route(&#39;&#39;)
-class docsTemplate(Resource):
+class docsHome(Resource):
 
     @ns.response(200, &#39;Documentação Renderizada&#39;)
     @ns.response(500, &#39;Internal Server error&#39;)
     def get(self):
 
-        #templates = glob.glob(os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;**&#34;, &#34;*.html&#34;))
         template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;index.html&#34;)
+
+        with open(template, &#34;r&#34;) as f:
+            return make_response(f.read(), 200)
+
+
+@ns.route(&#39;/&lt;path:basePath&gt;/project/&lt;path:page&gt;&#39;)
+class docsLongLinkFixer(Resource):
+    
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self, basePath, page):
+
+        return redirect(&#34;/docs/{}&#34;.format(page))
+
+
+@ns.route(&#39;/project/&lt;path:page&gt;&#39;)
+class docsLinkFixer(Resource):
+
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self, page):
+
+        return redirect(&#34;/docs/{}&#34;.format(page))
+
+@ns.route(&#39;/&lt;path:page&gt;&#39;)
+class docsTemplate(Resource):
+
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self, page):
+
+        print(&#34;2&#34;)
+        print(page)
+
+        pages = page.split(&#34;/&#34;)
+
+        template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, *pages)
 
         with open(template, &#34;r&#34;) as f:
             return make_response(f.read(), 200)</code></pre>
@@ -59,6 +95,210 @@ class docsTemplate(Resource):
 <section>
 <h2 class="section-title" id="header-classes">Classes</h2>
 <dl>
+<dt id="project.server.blueprints.docs.docsHome"><code class="flex name class">
+<span>class <span class="ident">docsHome</span></span>
+<span>(</span><span>api=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an abstract RESTX resource.</p>
+<p>Concrete resources should extend from this class
+and expose methods for each supported HTTP method.
+If a resource is invoked with an unsupported HTTP method,
+the API will return a response with status 405 Method Not Allowed.
+Otherwise the appropriate method is called and passed all arguments
+from the url rule used when adding the resource to an Api instance.
+See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class docsHome(Resource):
+
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self):
+
+        template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;index.html&#34;)
+
+        with open(template, &#34;r&#34;) as f:
+            return make_response(f.read(), 200)</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>flask_restx.resource.Resource</li>
+<li>flask.views.MethodView</li>
+<li>flask.views.View</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsHome.decorators"><code class="name">var <span class="ident">decorators</span> : List[Callable]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsHome.methods"><code class="name">var <span class="ident">methods</span> : Optional[List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsHome.provide_automatic_options"><code class="name">var <span class="ident">provide_automatic_options</span> : Optional[bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsHome.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.response(200, &#39;Documentação Renderizada&#39;)
+@ns.response(500, &#39;Internal Server error&#39;)
+def get(self):
+
+    template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;index.html&#34;)
+
+    with open(template, &#34;r&#34;) as f:
+        return make_response(f.read(), 200)</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="project.server.blueprints.docs.docsLinkFixer"><code class="flex name class">
+<span>class <span class="ident">docsLinkFixer</span></span>
+<span>(</span><span>api=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an abstract RESTX resource.</p>
+<p>Concrete resources should extend from this class
+and expose methods for each supported HTTP method.
+If a resource is invoked with an unsupported HTTP method,
+the API will return a response with status 405 Method Not Allowed.
+Otherwise the appropriate method is called and passed all arguments
+from the url rule used when adding the resource to an Api instance.
+See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class docsLinkFixer(Resource):
+
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self, page):
+
+        return redirect(&#34;/docs/{}&#34;.format(page))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>flask_restx.resource.Resource</li>
+<li>flask.views.MethodView</li>
+<li>flask.views.View</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsLinkFixer.decorators"><code class="name">var <span class="ident">decorators</span> : List[Callable]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsLinkFixer.methods"><code class="name">var <span class="ident">methods</span> : Optional[List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsLinkFixer.provide_automatic_options"><code class="name">var <span class="ident">provide_automatic_options</span> : Optional[bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsLinkFixer.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, page)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.response(200, &#39;Documentação Renderizada&#39;)
+@ns.response(500, &#39;Internal Server error&#39;)
+def get(self, page):
+
+    return redirect(&#34;/docs/{}&#34;.format(page))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="project.server.blueprints.docs.docsLongLinkFixer"><code class="flex name class">
+<span>class <span class="ident">docsLongLinkFixer</span></span>
+<span>(</span><span>api=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an abstract RESTX resource.</p>
+<p>Concrete resources should extend from this class
+and expose methods for each supported HTTP method.
+If a resource is invoked with an unsupported HTTP method,
+the API will return a response with status 405 Method Not Allowed.
+Otherwise the appropriate method is called and passed all arguments
+from the url rule used when adding the resource to an Api instance.
+See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class docsLongLinkFixer(Resource):
+    
+    @ns.response(200, &#39;Documentação Renderizada&#39;)
+    @ns.response(500, &#39;Internal Server error&#39;)
+    def get(self, basePath, page):
+
+        return redirect(&#34;/docs/{}&#34;.format(page))</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>flask_restx.resource.Resource</li>
+<li>flask.views.MethodView</li>
+<li>flask.views.View</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsLongLinkFixer.decorators"><code class="name">var <span class="ident">decorators</span> : List[Callable]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsLongLinkFixer.methods"><code class="name">var <span class="ident">methods</span> : Optional[List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.docs.docsLongLinkFixer.provide_automatic_options"><code class="name">var <span class="ident">provide_automatic_options</span> : Optional[bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.server.blueprints.docs.docsLongLinkFixer.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, basePath, page)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.response(200, &#39;Documentação Renderizada&#39;)
+@ns.response(500, &#39;Internal Server error&#39;)
+def get(self, basePath, page):
+
+    return redirect(&#34;/docs/{}&#34;.format(page))</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
 <dt id="project.server.blueprints.docs.docsTemplate"><code class="flex name class">
 <span>class <span class="ident">docsTemplate</span></span>
 <span>(</span><span>api=None, *args, **kwargs)</span>
@@ -80,10 +320,14 @@ See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
 
     @ns.response(200, &#39;Documentação Renderizada&#39;)
     @ns.response(500, &#39;Internal Server error&#39;)
-    def get(self):
+    def get(self, page):
 
-        #templates = glob.glob(os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;**&#34;, &#34;*.html&#34;))
-        template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;index.html&#34;)
+        print(&#34;2&#34;)
+        print(page)
+
+        pages = page.split(&#34;/&#34;)
+
+        template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, *pages)
 
         with open(template, &#34;r&#34;) as f:
             return make_response(f.read(), 200)</code></pre>
@@ -112,7 +356,7 @@ See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
 <h3>Methods</h3>
 <dl>
 <dt id="project.server.blueprints.docs.docsTemplate.get"><code class="name flex">
-<span>def <span class="ident">get</span></span>(<span>self)</span>
+<span>def <span class="ident">get</span></span>(<span>self, page)</span>
 </code></dt>
 <dd>
 <div class="desc"></div>
@@ -122,10 +366,14 @@ See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
 </summary>
 <pre><code class="python">@ns.response(200, &#39;Documentação Renderizada&#39;)
 @ns.response(500, &#39;Internal Server error&#39;)
-def get(self):
+def get(self, page):
 
-    #templates = glob.glob(os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;**&#34;, &#34;*.html&#34;))
-    template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, &#34;index.html&#34;)
+    print(&#34;2&#34;)
+    print(page)
+
+    pages = page.split(&#34;/&#34;)
+
+    template = os.path.join(os.path.dirname(__file__), &#34;static&#34;, *pages)
 
     with open(template, &#34;r&#34;) as f:
         return make_response(f.read(), 200)</code></pre>
@@ -144,18 +392,45 @@ def get(self):
 <ul id="index">
 <li><h3>Super-module</h3>
 <ul>
-<li><code><a title="project.server.blueprints" href="../index.html">project.server.blueprints</a></code></li>
+<li><code><a title="project.server.blueprints" href="docs/project/server/blueprints/index.html">project.server.blueprints</a></code></li>
 </ul>
 </li>
 <li><h3><a href="#header-classes">Classes</a></h3>
 <ul>
 <li>
-<h4><code><a title="project.server.blueprints.docs.docsTemplate" href="#project.server.blueprints.docs.docsTemplate">docsTemplate</a></code></h4>
+<h4><code><a title="project.server.blueprints.docs.docsHome" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsHome">docsHome</a></code></h4>
 <ul class="">
-<li><code><a title="project.server.blueprints.docs.docsTemplate.decorators" href="#project.server.blueprints.docs.docsTemplate.decorators">decorators</a></code></li>
-<li><code><a title="project.server.blueprints.docs.docsTemplate.get" href="#project.server.blueprints.docs.docsTemplate.get">get</a></code></li>
-<li><code><a title="project.server.blueprints.docs.docsTemplate.methods" href="#project.server.blueprints.docs.docsTemplate.methods">methods</a></code></li>
-<li><code><a title="project.server.blueprints.docs.docsTemplate.provide_automatic_options" href="#project.server.blueprints.docs.docsTemplate.provide_automatic_options">provide_automatic_options</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsHome.decorators" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsHome.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsHome.get" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsHome.get">get</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsHome.methods" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsHome.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsHome.provide_automatic_options" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsHome.provide_automatic_options">provide_automatic_options</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.server.blueprints.docs.docsLinkFixer" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLinkFixer">docsLinkFixer</a></code></h4>
+<ul class="">
+<li><code><a title="project.server.blueprints.docs.docsLinkFixer.decorators" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLinkFixer.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLinkFixer.get" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLinkFixer.get">get</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLinkFixer.methods" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLinkFixer.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLinkFixer.provide_automatic_options" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLinkFixer.provide_automatic_options">provide_automatic_options</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.server.blueprints.docs.docsLongLinkFixer" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLongLinkFixer">docsLongLinkFixer</a></code></h4>
+<ul class="">
+<li><code><a title="project.server.blueprints.docs.docsLongLinkFixer.decorators" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLongLinkFixer.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLongLinkFixer.get" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLongLinkFixer.get">get</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLongLinkFixer.methods" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLongLinkFixer.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsLongLinkFixer.provide_automatic_options" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsLongLinkFixer.provide_automatic_options">provide_automatic_options</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.server.blueprints.docs.docsTemplate" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsTemplate">docsTemplate</a></code></h4>
+<ul class="">
+<li><code><a title="project.server.blueprints.docs.docsTemplate.decorators" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsTemplate.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsTemplate.get" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsTemplate.get">get</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsTemplate.methods" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsTemplate.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.docs.docsTemplate.provide_automatic_options" href="docs/project/server/blueprints/docs/index.html#project.server.blueprints.docs.docsTemplate.provide_automatic_options">provide_automatic_options</a></code></li>
 </ul>
 </li>
 </ul>
