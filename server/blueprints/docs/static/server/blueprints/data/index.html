@@ -1,0 +1,598 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.10.0" />
+<title>project.server.blueprints.data API documentation</title>
+<meta name="description" content="" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>project.server.blueprints.data</code></h1>
+</header>
+<section id="section-intro">
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">import os
+import glob
+import json
+import csv
+import shutil
+from http import HTTPStatus
+
+from flask import abort, request
+from flask_restx import Namespace, Resource, fields, reqparse, inputs
+
+import appauth
+import utils
+
+
+ns = Namespace(&#39;api/data&#39;, 
+               description=&#39;APIs para Submeter Dados de Treinamento&#39;)
+
+
+datumFields = {&#34;*&#34;: fields.Wildcard(fields.String())}
+datumModel = ns.model(&#39;Datum&#39;, datumFields)
+
+
+dataModel = ns.model(&#39;Data&#39;, {
+    &#39;data&#39;: fields.Nested(
+        datumModel,
+        description=&#39;Conjunto de Dados da Tabela&#39;,
+        as_list=True
+    )
+})
+
+
+dataWrapperModel = ns.model(&#39;DataWrapper&#39;, {
+    &#39;name&#39;: fields.String(
+        description=&#39;Nome da Tabela&#39;
+    ),
+    &#39;data&#39;: fields.Nested(
+        datumModel,
+        description=&#39;Conjunto de Dados da Tabela&#39;,
+        as_list=True
+    )
+})
+
+
+parser = reqparse.RequestParser()
+parser.add_argument(&#39;token&#39;, 
+                    type=str,
+                    help=&#34;Validação de Acesso&#34;,
+                    default=True, 
+                    required=True)
+
+
+@ns.route(&#39;&#39;)
+class dataOps(Resource):
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.expect(dataWrapperModel)
+    @ns.marshal_with(dataWrapperModel)
+    def post(self):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+        registeredTables = [os.path.basename(item) for item in registeredTables]
+
+        if request.json[&#39;name&#39;] in registeredTables:
+            ns.abort(400, &#39;Tabela já registrada&#39;)
+
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(request.json[&#39;name&#39;]))
+        os.mkdir(tableFolder)
+
+        schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+        columns = request.json[&#39;data&#39;][0].keys()
+        with open(schemaFile, &#34;w&#34;) as f:
+            f.write(&#34;\n&#34;.join(columns))
+
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+        with open(dataFile, &#34;w&#34;, encoding=&#39;utf8&#39;, newline=&#39;&#39;) as f:
+            dictWriter = csv.DictWriter(f, columns)
+            dictWriter.writeheader()
+            dictWriter.writerows(request.json[&#39;data&#39;])
+
+        return {&#34;message&#34;: &#34;Tabela Criada&#34;}
+
+
+@ns.route(&#39;/&lt;string:tableName&gt;&#39;)
+class datum(Resource):
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(404, &#39;Cliente Não Encontrado&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.marshal_with(dataModel)
+    def get(self, tableName):
+    
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+        with open(dataFile, &#34;r&#34;) as f:
+            dictReader = csv.DictReader(f)
+            data = list(dictReader)    
+
+        return {&#39;data&#39;: data}
+
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.expect(dataModel)
+    @ns.marshal_with(dataModel)
+    def put(self, tableName):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Inválido&#34;)
+
+        registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+        registeredTables = [os.path.basename(item) for item in registeredTables]
+
+        if tableName not in registeredTables:
+            ns.abort(400, &#39;Tabela Não Existe&#39;)
+
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+        schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+        with open(schemaFile, &#34;r&#34;) as f:
+            columns = [item.strip() for item in f.readlines()]
+            columns.sort()
+
+        for entry in request.json[&#39;data&#39;]:
+
+            entryCols = list(entry.keys())
+            entryCols.sort()
+
+            if columns != entryCols:
+                ns.abort(400, &#39;Garanta que Todos os Registros Submetidos Contém as Colunas Necessárias Preenchidas&#39;)
+
+        with open(dataFile, &#34;a&#34;) as f:
+            dictWriter = csv.DictWriter(f, columns)
+            dictWriter.writerows(request.json[&#39;data&#39;])
+
+        return {&#34;message&#34;: &#34;Tabela Atualizada&#34;}
+
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(404, &#39;Cliente Não Encontrado&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.response(204, &#39;Sucesso (Sem Conteudo)&#39;)
+    def delete(self, tableName):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+
+        if not os.path.isdir(tableFolder):
+            ns.abort(400, &#39;Tablea Fornecida Não Existe&#39;)
+
+        shutil.rmtree(tableFolder)
+
+        return &#39;&#39;, 204       </code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-classes">Classes</h2>
+<dl>
+<dt id="project.server.blueprints.data.dataOps"><code class="flex name class">
+<span>class <span class="ident">dataOps</span></span>
+<span>(</span><span>api=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an abstract RESTX resource.</p>
+<p>Concrete resources should extend from this class
+and expose methods for each supported HTTP method.
+If a resource is invoked with an unsupported HTTP method,
+the API will return a response with status 405 Method Not Allowed.
+Otherwise the appropriate method is called and passed all arguments
+from the url rule used when adding the resource to an Api instance.
+See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class dataOps(Resource):
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.expect(dataWrapperModel)
+    @ns.marshal_with(dataWrapperModel)
+    def post(self):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+        registeredTables = [os.path.basename(item) for item in registeredTables]
+
+        if request.json[&#39;name&#39;] in registeredTables:
+            ns.abort(400, &#39;Tabela já registrada&#39;)
+
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(request.json[&#39;name&#39;]))
+        os.mkdir(tableFolder)
+
+        schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+        columns = request.json[&#39;data&#39;][0].keys()
+        with open(schemaFile, &#34;w&#34;) as f:
+            f.write(&#34;\n&#34;.join(columns))
+
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+        with open(dataFile, &#34;w&#34;, encoding=&#39;utf8&#39;, newline=&#39;&#39;) as f:
+            dictWriter = csv.DictWriter(f, columns)
+            dictWriter.writeheader()
+            dictWriter.writerows(request.json[&#39;data&#39;])
+
+        return {&#34;message&#34;: &#34;Tabela Criada&#34;}</code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>flask_restx.resource.Resource</li>
+<li>flask.views.MethodView</li>
+<li>flask.views.View</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.server.blueprints.data.dataOps.decorators"><code class="name">var <span class="ident">decorators</span> : List[Callable]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.data.dataOps.methods"><code class="name">var <span class="ident">methods</span> : Optional[List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.data.dataOps.provide_automatic_options"><code class="name">var <span class="ident">provide_automatic_options</span> : Optional[bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.server.blueprints.data.dataOps.post"><code class="name flex">
+<span>def <span class="ident">post</span></span>(<span>self)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+@ns.response(500, &#39;Erro Interno do Servidor&#39;)
+@ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+@ns.expect(dataWrapperModel)
+@ns.marshal_with(dataWrapperModel)
+def post(self):
+
+    if not appauth.validateToken(**parser.parse_args()):
+        ns.abort(401, &#34;Token Invalido&#34;)
+    
+    registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+    registeredTables = [os.path.basename(item) for item in registeredTables]
+
+    if request.json[&#39;name&#39;] in registeredTables:
+        ns.abort(400, &#39;Tabela já registrada&#39;)
+
+    tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(request.json[&#39;name&#39;]))
+    os.mkdir(tableFolder)
+
+    schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+    columns = request.json[&#39;data&#39;][0].keys()
+    with open(schemaFile, &#34;w&#34;) as f:
+        f.write(&#34;\n&#34;.join(columns))
+
+    dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+    with open(dataFile, &#34;w&#34;, encoding=&#39;utf8&#39;, newline=&#39;&#39;) as f:
+        dictWriter = csv.DictWriter(f, columns)
+        dictWriter.writeheader()
+        dictWriter.writerows(request.json[&#39;data&#39;])
+
+    return {&#34;message&#34;: &#34;Tabela Criada&#34;}</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+<dt id="project.server.blueprints.data.datum"><code class="flex name class">
+<span>class <span class="ident">datum</span></span>
+<span>(</span><span>api=None, *args, **kwargs)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Represents an abstract RESTX resource.</p>
+<p>Concrete resources should extend from this class
+and expose methods for each supported HTTP method.
+If a resource is invoked with an unsupported HTTP method,
+the API will return a response with status 405 Method Not Allowed.
+Otherwise the appropriate method is called and passed all arguments
+from the url rule used when adding the resource to an Api instance.
+See :meth:<code>~flask_restx.Api.add_resource</code> for details.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">class datum(Resource):
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(404, &#39;Cliente Não Encontrado&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.marshal_with(dataModel)
+    def get(self, tableName):
+    
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+        with open(dataFile, &#34;r&#34;) as f:
+            dictReader = csv.DictReader(f)
+            data = list(dictReader)    
+
+        return {&#39;data&#39;: data}
+
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.expect(dataModel)
+    @ns.marshal_with(dataModel)
+    def put(self, tableName):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Inválido&#34;)
+
+        registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+        registeredTables = [os.path.basename(item) for item in registeredTables]
+
+        if tableName not in registeredTables:
+            ns.abort(400, &#39;Tabela Não Existe&#39;)
+
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+        schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+        dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+        with open(schemaFile, &#34;r&#34;) as f:
+            columns = [item.strip() for item in f.readlines()]
+            columns.sort()
+
+        for entry in request.json[&#39;data&#39;]:
+
+            entryCols = list(entry.keys())
+            entryCols.sort()
+
+            if columns != entryCols:
+                ns.abort(400, &#39;Garanta que Todos os Registros Submetidos Contém as Colunas Necessárias Preenchidas&#39;)
+
+        with open(dataFile, &#34;a&#34;) as f:
+            dictWriter = csv.DictWriter(f, columns)
+            dictWriter.writerows(request.json[&#39;data&#39;])
+
+        return {&#34;message&#34;: &#34;Tabela Atualizada&#34;}
+
+
+    @ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+    @ns.response(500, &#39;Erro Interno do Servidor&#39;)
+    @ns.response(404, &#39;Cliente Não Encontrado&#39;)
+    @ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+    @ns.response(204, &#39;Sucesso (Sem Conteudo)&#39;)
+    def delete(self, tableName):
+
+        if not appauth.validateToken(**parser.parse_args()):
+            ns.abort(401, &#34;Token Invalido&#34;)
+        
+        tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+
+        if not os.path.isdir(tableFolder):
+            ns.abort(400, &#39;Tablea Fornecida Não Existe&#39;)
+
+        shutil.rmtree(tableFolder)
+
+        return &#39;&#39;, 204       </code></pre>
+</details>
+<h3>Ancestors</h3>
+<ul class="hlist">
+<li>flask_restx.resource.Resource</li>
+<li>flask.views.MethodView</li>
+<li>flask.views.View</li>
+</ul>
+<h3>Class variables</h3>
+<dl>
+<dt id="project.server.blueprints.data.datum.decorators"><code class="name">var <span class="ident">decorators</span> : List[Callable]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.data.datum.methods"><code class="name">var <span class="ident">methods</span> : Optional[List[str]]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+<dt id="project.server.blueprints.data.datum.provide_automatic_options"><code class="name">var <span class="ident">provide_automatic_options</span> : Optional[bool]</code></dt>
+<dd>
+<div class="desc"></div>
+</dd>
+</dl>
+<h3>Methods</h3>
+<dl>
+<dt id="project.server.blueprints.data.datum.delete"><code class="name flex">
+<span>def <span class="ident">delete</span></span>(<span>self, tableName)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+@ns.response(500, &#39;Erro Interno do Servidor&#39;)
+@ns.response(404, &#39;Cliente Não Encontrado&#39;)
+@ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+@ns.response(204, &#39;Sucesso (Sem Conteudo)&#39;)
+def delete(self, tableName):
+
+    if not appauth.validateToken(**parser.parse_args()):
+        ns.abort(401, &#34;Token Invalido&#34;)
+    
+    tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+
+    if not os.path.isdir(tableFolder):
+        ns.abort(400, &#39;Tablea Fornecida Não Existe&#39;)
+
+    shutil.rmtree(tableFolder)
+
+    return &#39;&#39;, 204       </code></pre>
+</details>
+</dd>
+<dt id="project.server.blueprints.data.datum.get"><code class="name flex">
+<span>def <span class="ident">get</span></span>(<span>self, tableName)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+@ns.response(500, &#39;Erro Interno do Servidor&#39;)
+@ns.response(404, &#39;Cliente Não Encontrado&#39;)
+@ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+@ns.marshal_with(dataModel)
+def get(self, tableName):
+
+    if not appauth.validateToken(**parser.parse_args()):
+        ns.abort(401, &#34;Token Invalido&#34;)
+    
+    tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+    dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+    with open(dataFile, &#34;r&#34;) as f:
+        dictReader = csv.DictReader(f)
+        data = list(dictReader)    
+
+    return {&#39;data&#39;: data}</code></pre>
+</details>
+</dd>
+<dt id="project.server.blueprints.data.datum.put"><code class="name flex">
+<span>def <span class="ident">put</span></span>(<span>self, tableName)</span>
+</code></dt>
+<dd>
+<div class="desc"></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">@ns.doc(params={&#39;token&#39;: {&#39;description&#39;: &#39;Token de Autenticação&#39;, &#39;type&#39;: &#39;string&#39;, &#39;default&#39;: &#39;&#39;}})
+@ns.response(500, &#39;Erro Interno do Servidor&#39;)
+@ns.response(401, &#39;Token Inválido ou Não Fornecido&#39;)
+@ns.expect(dataModel)
+@ns.marshal_with(dataModel)
+def put(self, tableName):
+
+    if not appauth.validateToken(**parser.parse_args()):
+        ns.abort(401, &#34;Token Inválido&#34;)
+
+    registeredTables = glob.glob(os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;*&#34;))
+    registeredTables = [os.path.basename(item) for item in registeredTables]
+
+    if tableName not in registeredTables:
+        ns.abort(400, &#39;Tabela Não Existe&#39;)
+
+    tableFolder = os.path.join(os.path.dirname(__file__), &#34;..&#34;, &#34;..&#34;, &#34;data&#34;, &#34;{}&#34;.format(tableName))
+    schemaFile = os.path.join(tableFolder, &#34;columns.txt&#34;)
+    dataFile = os.path.join(tableFolder, &#34;data.csv&#34;)
+
+    with open(schemaFile, &#34;r&#34;) as f:
+        columns = [item.strip() for item in f.readlines()]
+        columns.sort()
+
+    for entry in request.json[&#39;data&#39;]:
+
+        entryCols = list(entry.keys())
+        entryCols.sort()
+
+        if columns != entryCols:
+            ns.abort(400, &#39;Garanta que Todos os Registros Submetidos Contém as Colunas Necessárias Preenchidas&#39;)
+
+    with open(dataFile, &#34;a&#34;) as f:
+        dictWriter = csv.DictWriter(f, columns)
+        dictWriter.writerows(request.json[&#39;data&#39;])
+
+    return {&#34;message&#34;: &#34;Tabela Atualizada&#34;}</code></pre>
+</details>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="project.server.blueprints" href="../index.html">project.server.blueprints</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-classes">Classes</a></h3>
+<ul>
+<li>
+<h4><code><a title="project.server.blueprints.data.dataOps" href="#project.server.blueprints.data.dataOps">dataOps</a></code></h4>
+<ul class="">
+<li><code><a title="project.server.blueprints.data.dataOps.decorators" href="#project.server.blueprints.data.dataOps.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.data.dataOps.methods" href="#project.server.blueprints.data.dataOps.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.data.dataOps.post" href="#project.server.blueprints.data.dataOps.post">post</a></code></li>
+<li><code><a title="project.server.blueprints.data.dataOps.provide_automatic_options" href="#project.server.blueprints.data.dataOps.provide_automatic_options">provide_automatic_options</a></code></li>
+</ul>
+</li>
+<li>
+<h4><code><a title="project.server.blueprints.data.datum" href="#project.server.blueprints.data.datum">datum</a></code></h4>
+<ul class="">
+<li><code><a title="project.server.blueprints.data.datum.decorators" href="#project.server.blueprints.data.datum.decorators">decorators</a></code></li>
+<li><code><a title="project.server.blueprints.data.datum.delete" href="#project.server.blueprints.data.datum.delete">delete</a></code></li>
+<li><code><a title="project.server.blueprints.data.datum.get" href="#project.server.blueprints.data.datum.get">get</a></code></li>
+<li><code><a title="project.server.blueprints.data.datum.methods" href="#project.server.blueprints.data.datum.methods">methods</a></code></li>
+<li><code><a title="project.server.blueprints.data.datum.provide_automatic_options" href="#project.server.blueprints.data.datum.provide_automatic_options">provide_automatic_options</a></code></li>
+<li><code><a title="project.server.blueprints.data.datum.put" href="#project.server.blueprints.data.datum.put">put</a></code></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc" title="pdoc: Python API documentation generator"><cite>pdoc</cite> 0.10.0</a>.</p>
+</footer>
+</body>
+</html>

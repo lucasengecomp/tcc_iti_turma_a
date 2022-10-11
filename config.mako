@@ -1,0 +1,3 @@
+<%!
+    link_prefix = 'docs'
+%>

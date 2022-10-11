@@ -1,0 +1,387 @@
+[
+    {
+        "name": "customersBronze",
+        "operations": [
+            {
+                "type": "readFile",
+                "parameters": {
+                    "filePath": "../sparkTests/csv/olist_customers_dataset.csv"
+                }
+            },
+            {
+                "type": "selectColumns",
+                "parameters": {
+                    "columnList": [
+                        "customer_id",
+                        "customer_unique_id"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "ordersBronze",
+        "operations": [
+            {
+                "type": "readFile",
+                "parameters": {
+                    "filePath": "../sparkTests/csv/olist_orders_dataset.csv"
+                }
+            },
+            {
+                "type": "filterColumn",
+                "parameters": {
+                    "column": "order_status",
+                    "condition": "canceled",
+                    "operation": "!="
+                }
+            },
+            {
+                "type": "columnToDate",
+                "parameters": {
+                    "column": "order_purchase_timestamp",
+                    "dateFormat": "yyyy-MM-dd HH:mm:ss",
+                    "output": "date"
+                }
+            },
+            {
+                "type": "selectColumns",
+                "parameters": {
+                    "columnList": [
+                        "order_id",
+                        "customer_id",
+                        "date"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "orderItemsBronze",
+        "operations": [
+            {
+                "type": "readFile",
+                "parameters": {
+                    "filePath": "../sparkTests/csv/olist_order_items_dataset.csv"
+                }
+            },
+            {
+                "type": "groupbyColumn",
+                "parameters": {
+                    "columns": "order_id",
+                    "agg": [
+                        {
+                            "type": "sum",
+                            "column": "price"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "sum(price)",
+                    "newName": "revenue"
+                }
+            }
+        ]
+    },
+    {
+        "name": "bronze",
+        "operations": [
+            {
+                "type": "joinTables",
+                "parameters": {
+                    "df1": "ordersBronze",
+                    "df2": "orderItemsBronze",
+                    "field1": "order_id",
+                    "field2": "order_id",
+                    "optype": "left"
+                }
+            },
+            {
+                "type": "joinTables",
+                "parameters": {
+                    "df1": "bronze",
+                    "df2": "customersBronze",
+                    "field1": "customer_id",
+                    "field2": "customer_id",
+                    "optype": "left"
+                }
+            },
+            {
+                "type": "groupbyColumn",
+                "parameters": {
+                    "columns": ["customer_unique_id", "date"],
+                    "agg": [
+                        {
+                            "type": "sum",
+                            "column": "revenue"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "sum(revenue)",
+                    "newName": "revenue"
+                }
+            },
+            {
+                "type": "getMaxValue",
+                "parameters": {
+                    "column": "date",
+                    "output": "maxDate"
+                }
+            }
+        ]
+    },
+    {
+        "name": "tSilver",
+        "operations": [
+            {
+                "type": "copyTable",
+                "parameters": {
+                    "df": "bronze"
+                }
+            },
+            {
+                "type": "groupbyColumn",
+                "parameters": {
+                    "columns": ["customer_unique_id", "maxDate"],
+                    "agg": [
+                        {
+                            "type": "min",
+                            "column": "date"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "min(date)",
+                    "newName": "minDateCustomer"
+                }
+            },
+            {
+                "type": "addDaysToDate",
+                "parameters": {
+                    "column": "maxDate",
+                    "numDays": 1,
+                    "output": "maxDate"
+                }
+            },
+            {
+                "type": "daysBetweenDates",
+                "parameters": {
+                    "col1": "maxDate",
+                    "col2": "minDateCustomer",
+                    "output": "T"
+                }
+            },
+            {
+                "type": "selectColumns",
+                "parameters": {
+                    "columnList": [
+                        "customer_unique_id",
+                        "T"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "recencySilver",
+        "operations": [
+            {
+                "type": "copyTable",
+                "parameters": {
+                    "df": "bronze"
+                }
+            },
+            {
+                "type": "groupbyColumn",
+                "parameters": {
+                    "columns": "customer_unique_id",
+                    "agg": [
+                        {
+                            "type": "min",
+                            "column": "date"
+                        },
+                        {
+                            "type": "max",
+                            "column": "date"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "min(date)",
+                    "newName": "minDateCustomer"
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "max(date)",
+                    "newName": "maxDateCustomer"
+                }
+            },
+            {
+                "type": "daysBetweenDates",
+                "parameters": {
+                    "col1": "maxDateCustomer",
+                    "col2": "minDateCustomer",
+                    "output": "recency"
+                }
+            },
+            {
+                "type": "selectColumns",
+                "parameters": {
+                    "columnList": [
+                        "customer_unique_id",
+                        "recency"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "frequencySilver",
+        "operations": [
+            {
+                "type": "copyTable",
+                "parameters": {
+                    "df": "bronze"
+                }
+            },
+            {
+                "type": "groupbyColumn",
+                "parameters": {
+                    "columns": "customer_unique_id",
+                    "agg": [
+                        {
+                            "type": "count",
+                            "column": "date"
+                        },
+                        {
+                            "type": "sum",
+                            "column": "revenue"
+                        }
+                    ]
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "count(date)",
+                    "newName": "frequency"
+                }
+            },
+            {
+                "type": "renameColumns",
+                "parameters": {
+                    "oldName": "sum(revenue)",
+                    "newName": "total_monetary"
+                }
+            },
+            {
+                "type": "columnsOperations",
+                "parameters": {
+                    "column1": "total_monetary",
+                    "column2": "frequency",
+                    "opType": "/",
+                    "outputColumn": "avg_monetary"
+                }
+            },
+            {
+                "type": "literalsOperations",
+                "parameters": {
+                    "column": "frequency",
+                    "value": 1,
+                    "opType": "-",
+                    "outputColumn": "frequency"
+                }
+            },
+            {
+                "type": "selectColumns",
+                "parameters": {
+                    "columnList": [
+                        "customer_unique_id",
+                        "frequency",
+                        "avg_monetary"
+                    ]
+                }
+            }
+        ]
+    },
+    {
+        "name": "silver",
+        "operations": [
+            {
+                "type": "joinTables",
+                "parameters": {
+                    "df1": "tSilver",
+                    "df2": "recencySilver",
+                    "field1": "customer_unique_id",
+                    "field2": "customer_unique_id",
+                    "optype": "outer"
+                }
+            },
+            {
+                "type": "joinTables",
+                "parameters": {
+                    "df1": "silver",
+                    "df2": "frequencySilver",
+                    "field1": "customer_unique_id",
+                    "field2": "customer_unique_id",
+                    "optype": "outer"
+                }
+            },
+            {
+                "type": "filterColumn",
+                "parameters": {
+                    "column": "recency",
+                    "condition": 0,
+                    "operation": "!="
+                }
+            }
+        ]
+    },
+    {
+        "name": "gold",
+        "operations": [
+            {
+                "type": "copyTable",
+                "parameters": {
+                    "df": "silver"
+                }
+            },
+            {
+                "type": "trainBetaGeoFitter",
+                "parameters": {
+                    "frequencyCol": "frequency",
+                    "recencyCol": "recency",
+                    "tCol": "T",
+                    "name": "bgfModel",
+                    "save": "bgfTrained"
+                }
+            },
+            {
+                "type": "predictBetaGeoFitter",
+                "parameters": {
+                    "frequencyCol": "frequency",
+                    "recencyCol": "recency",
+                    "tCol": "T",
+                    "time": 100,
+                    "model": "bgfModel",
+                    "output": "predicted"
+                }
+            }
+        ]
+    }
+]

@@ -1,0 +1,13 @@
+[
+    {
+        "name": "readFile",
+        "operations": [
+            {
+                "type": "string",
+                "parameters": {
+                    "filename": "teste1234"
+                }
+            }
+        ]
+    }
+]
